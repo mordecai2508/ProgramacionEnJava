@@ -6,7 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Cliente {
+ 
+public class Proveedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,20 +15,16 @@ public class Cliente {
     private String email;
     private String telefono;
     private String direccion;
-    
-    public Cliente(Long id, String nombre, String email, String telefono, String direccion) {
+    public Proveedor() {
+    }
+    public Proveedor(Long id, String nombre, String email, String telefono, String direccion) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
         this.direccion = direccion;
     }
-
     
-    public Cliente() {
-    }
-
-
     public Long getId() {
         return id;
     }
@@ -58,11 +55,7 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    @Override
-    public String toString() {
-        return "Cliente [id=" + id + ", nombre=" + nombre + ", email=" + email + ", telefono=" + telefono
-                + ", direccion=" + direccion + "]";
-    }
-
+   
+    
     
 }
