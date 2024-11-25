@@ -11,13 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
-@RequestMapping("/ventas")
 public class VentasController {
 
     @Autowired
@@ -29,7 +28,15 @@ public class VentasController {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping("/nueva")
+    @GetMapping("/ventas")
+    public String listarVentas(Model model){
+        List<Venta> ventas = ventaService.listarVentas();
+        model.addAttribute("ventas",ventas);
+        return "venta/listaVentas";
+        
+    }
+
+    @GetMapping("ventas/nueva")
     public String mostrarFormularioVenta(Model model) {
         model.addAttribute("clientes", clienteService.listarClientes());
         model.addAttribute("productos", productoService.listarProductos());
