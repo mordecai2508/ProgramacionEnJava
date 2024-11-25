@@ -21,11 +21,8 @@ public class VentaService {
         return ventaRepository.save(venta);
     }
 
-    public Venta obterVenta(Long id){
+    public Venta obtenerVentaPorId(Long id){
         return ventaRepository.findById(id).orElse(null);
     }
 
-    public void eliminarVenta(Long id){
-        ventaRepository.deleteById(id);
-    }
 }

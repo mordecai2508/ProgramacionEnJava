@@ -1,25 +1,30 @@
 package uts.java.proyectoprueba.models;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date fecha;
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // Especifica el formato esperado
+    private LocalDate fecha;
     private Double total;
 
-    @ManyToOne
+    @ManyToOne 
     private Cliente cliente;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalles;
-    
 
-    public Venta(Long id, Date fecha, Double total, Cliente cliente, List<DetalleVenta> detalles) {
+    public Venta() {
+    }
+
+    public Venta(Long id, LocalDate fecha, Double total, Cliente cliente, List<DetalleVenta> detalles) {
         this.id = id;
         this.fecha = fecha;
         this.total = total;
@@ -35,11 +40,11 @@ public class Venta {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -62,8 +67,6 @@ public class Venta {
     public List<DetalleVenta> getDetalles() {
         return detalles;
     }
-
-    
 
     @Override
     public String toString() {

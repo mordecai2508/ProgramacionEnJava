@@ -19,11 +19,11 @@ public class UsuarioService {
         
     }
 
-    public Usuario guardarVenta(Usuario usuario){
+    public Usuario guardarUsuario(Usuario usuario){
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario obtenerUsuario(Long id){
+    public Usuario obtenerUsuarioPorId(Long id){
         return usuarioRepository.findById(id).orElse(null);
     }
 
