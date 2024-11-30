@@ -1,9 +1,12 @@
 package uts.java.proyectoprueba.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import uts.java.proyectoprueba.models.DetalleVenta;
 import uts.java.proyectoprueba.models.Venta;
 import uts.java.proyectoprueba.repositories.VentaRepository;
 
@@ -23,6 +26,13 @@ public class VentaService {
 
     public Venta obtenerVentaPorId(Long id){
         return ventaRepository.findById(id).orElse(null);
+    }
+
+    public void agregarDetalle(Venta venta, DetalleVenta detalle) {
+        if (venta.getDetalles() == null) {
+            venta.setDetalles(new ArrayList<>());
+        }
+        venta.getDetalles().add(detalle);
     }
 
 }

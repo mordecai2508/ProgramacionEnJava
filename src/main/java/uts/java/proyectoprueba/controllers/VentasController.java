@@ -1,6 +1,7 @@
 package uts.java.proyectoprueba.controllers;
 
 import uts.java.proyectoprueba.models.DetalleVenta;
+import uts.java.proyectoprueba.models.Producto;
 import uts.java.proyectoprueba.models.Venta;
 import uts.java.proyectoprueba.services.VentaService;
 import uts.java.proyectoprueba.services.ClienteService;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -43,23 +44,24 @@ public class VentasController {
         return "venta/AgregarVenta";
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("ventas/guardar")
     public String guardarVenta(@RequestParam("clienteId") Long clienteId,
-                              @RequestParam("fecha") LocalDate fecha,
-                              @RequestParam("productoId") Long productoId,
-                              @RequestParam("cantidad") Integer cantidad) {
+            @RequestParam("fecha") Date fecha,
+            @RequestParam("productoId") Long productoId,
+            @RequestParam("cantidad") Integer cantidad) {
 
         Venta venta = new Venta();
+        Producto producto = new Producto();
         venta.setCliente(clienteService.obtenerCliente(clienteId));
         venta.setFecha(fecha);
-
+        producto = productoService.obtenerProductoPorId(productoId);
+        venta.setTotal(venta.calcularTotal(cantidad,producto.getPrecio()));
         DetalleVenta detalle = new DetalleVenta();
         detalle.setProducto(productoService.obtenerProductoPorId(productoId));
         detalle.setCantidad(cantidad);
         detalle.setVenta(venta);
-
-        venta.getDetalles().add(detalle);
-
+        
+        ventaService.agregarDetalle(venta, detalle);
         ventaService.guardarVenta(venta);
 
         return "redirect:/ventas";

@@ -1,7 +1,8 @@
 package uts.java.proyectoprueba.models;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+//import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,8 +12,8 @@ public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Especifica el formato esperado
-    private LocalDate fecha;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha;
     private Double total;
 
     @ManyToOne 
@@ -24,7 +25,7 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Long id, LocalDate fecha, Double total, Cliente cliente, List<DetalleVenta> detalles) {
+    public Venta(Long id, Date fecha, Double total, Cliente cliente, List<DetalleVenta> detalles) {
         this.id = id;
         this.fecha = fecha;
         this.total = total;
@@ -40,11 +41,11 @@ public class Venta {
         this.id = id;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -78,7 +79,7 @@ public class Venta {
         this.detalles = detalles;
     }
 
-    public void calcularTotal() {
-        this.total = detalles.stream().mapToDouble(DetalleVenta::calcularSubtotal).sum();
+    public double calcularTotal(int cantidad, double precioUnitario) {
+        return cantidad*precioUnitario;
     }
 }
